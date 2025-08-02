@@ -21,3 +21,8 @@ export async function getTodoById(id: string) {
 export async function createTodo(data: Todo) {
   return (await axiosInstance.post<Todo>("/todos", data)).data;
 }
+
+// Update checked with todo ID
+export async function updateChecked(id: string, checked: boolean) {
+  return (await axiosInstance.patch<Todo>(`/todos/${id}`, { checked })).data;
+}

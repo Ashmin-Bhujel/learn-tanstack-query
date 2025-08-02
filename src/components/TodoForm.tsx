@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import type { Todo } from "../types/todo";
 import { useCreateTodo } from "../services/mutations";
+import { cn } from "../lib/utils";
 
 export default function TodoForm() {
   const createTodoMutation = useCreateTodo();
@@ -44,7 +45,12 @@ export default function TodoForm() {
         type="submit"
         form="todo-form"
         disabled={createTodoMutation.isPending}
-        className={`cursor-pointer rounded-md px-4 py-2 ${createTodoMutation.isPending ? "bg-neutral-800" : "bg-sky-700"} hover:bg-sky-600 active:bg-sky-800`}
+        className={cn(
+          "cursor-pointer rounded-md px-4 py-2 font-medium",
+          createTodoMutation.isPending
+            ? "bg-neutral-700 hover:bg-neutral-600 active:bg-neutral-800"
+            : "bg-sky-700 hover:bg-sky-600 active:bg-sky-800"
+        )}
       >
         {createTodoMutation.isPending ? "Creating" : "Create"}
       </button>
