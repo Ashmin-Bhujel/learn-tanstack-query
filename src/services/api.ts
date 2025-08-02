@@ -16,3 +16,8 @@ export async function getTodosIds() {
 export async function getTodoById(id: string) {
   return (await axiosInstance.get<Todo>(`/todos/${id}`)).data;
 }
+
+// Create todo
+export async function createTodo(data: Todo) {
+  return (await axiosInstance.post<Todo>("/todos", data)).data;
+}

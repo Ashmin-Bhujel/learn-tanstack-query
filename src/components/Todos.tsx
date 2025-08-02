@@ -1,19 +1,30 @@
 import { useTodosByIds, useTodosIds } from "../services/queries";
 import TodoCard from "./TodoCard";
+import TodoForm from "./TodoForm";
 
 export default function Todos() {
   const todosIds = useTodosIds();
   const todos = useTodosByIds(todosIds.data);
 
   return (
-    <main className="container mx-auto p-4 md:p-10">
-      <h1 className="text-4xl font-semibold">Todos</h1>
+    <main className="mx-auto max-w-2xl p-4 md:p-10">
+      <h1 className="text-4xl font-bold">Learning Tanstack Query</h1>
 
-      <div className="flex flex-col gap-4 py-8">
-        {todos.map(({ data: todo }) => (
-          <TodoCard key={todo?.id ?? crypto.randomUUID()} todo={todo} />
-        ))}
-      </div>
+      {/* Todo form */}
+      <section className="my-16 space-y-6">
+        <h2 className="text-2xl font-semibold">Todo Form</h2>
+        <TodoForm />
+      </section>
+
+      {/* Todo list */}
+      <section className="my-8 space-y-6">
+        <h2 className="text-2xl font-semibold">Todo List</h2>
+        <div className="space-y-6">
+          {todos.map(({ data: todo }) => (
+            <TodoCard key={todo?.id ?? crypto.randomUUID()} todo={todo} />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
