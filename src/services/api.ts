@@ -11,3 +11,8 @@ export async function getTodosIds() {
     (todo) => todo.id
   );
 }
+
+// Get todo by ID
+export async function getTodoById(id: string) {
+  return (await axiosInstance.get<Todo>(`/todos/${id}`)).data;
+}
