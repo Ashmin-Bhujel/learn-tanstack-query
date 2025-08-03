@@ -13,7 +13,7 @@ export async function getTodosIds() {
 }
 
 // Get todo by ID
-export async function getTodoById(id: string) {
+export async function getTodo(id: string) {
   return (await axiosInstance.get<Todo>(`/todos/${id}`)).data;
 }
 
@@ -23,6 +23,11 @@ export async function createTodo(data: Todo) {
 }
 
 // Update checked with todo ID
-export async function updateChecked(id: string, checked: boolean) {
+export async function updateCheckedStatus(id: string, checked: boolean) {
   return (await axiosInstance.patch<Todo>(`/todos/${id}`, { checked })).data;
+}
+
+// Delete todo by ID
+export async function deleteTodo(id: string) {
+  return (await axiosInstance.delete<Todo>(`/todos/${id}`)).data;
 }

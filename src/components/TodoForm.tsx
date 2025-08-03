@@ -6,9 +6,9 @@ import { cn } from "../lib/utils";
 export default function TodoForm() {
   const createTodoMutation = useCreateTodo();
 
-  const { register, handleSubmit } = useForm<Todo>({
+  const todoForm = useForm<Todo>({
     defaultValues: {
-      id: crypto.randomUUID(),
+      id: "",
       title: "",
       description: "",
       checked: false,
@@ -17,7 +17,9 @@ export default function TodoForm() {
 
   function handleTodoFormSubmit(data: Todo) {
     if (data.title.trim() && data.description.trim()) {
-      createTodoMutation.mutate(data);
+      const newTodo = { ...data, id: crypto.randomUUID() };
+      createTodoMutation.mutate(newTodo);
+      todoForm.reset();
     }
   }
 
@@ -25,20 +27,20 @@ export default function TodoForm() {
     <form
       className="flex flex-col gap-4"
       id="todo-form"
-      onSubmit={handleSubmit(handleTodoFormSubmit)}
+      onSubmit={todoForm.handleSubmit(handleTodoFormSubmit)}
     >
       <input
         type="text"
         id="todo-title"
         placeholder="Enter todo title"
-        {...register("title")}
+        {...todoForm.register("title")}
         className="rounded-md bg-neutral-800 px-4 py-2 text-base"
       />
       <input
         type="text"
         id="todo-description"
         placeholder="Enter todo description"
-        {...register("description")}
+        {...todoForm.register("description")}
         className="rounded-md bg-neutral-800 px-4 py-2 text-base"
       />
       <button

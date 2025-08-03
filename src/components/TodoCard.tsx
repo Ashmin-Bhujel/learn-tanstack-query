@@ -1,9 +1,10 @@
 import { cn } from "../lib/utils";
-import { useUpdateChecked } from "../services/mutations";
+import { useDeleteTodo, useUpdateCheckedStatus } from "../services/mutations";
 import type { Todo } from "../types/todo";
 
 export default function TodoCard({ todo }: { todo: Todo | undefined }) {
-  const updateCheckedMutation = useUpdateChecked();
+  const updateCheckedStatusMutation = useUpdateCheckedStatus();
+  const deleteTodoMutation = useDeleteTodo();
 
   return (
     <div className="rounded-md bg-neutral-800 p-4">
@@ -24,7 +25,7 @@ export default function TodoCard({ todo }: { todo: Todo | undefined }) {
         <button
           onClick={() => {
             if (todo) {
-              updateCheckedMutation.mutate({
+              updateCheckedStatusMutation.mutate({
                 id: todo?.id,
                 checked: !todo?.checked,
               });
@@ -39,7 +40,14 @@ export default function TodoCard({ todo }: { todo: Todo | undefined }) {
         >
           {todo?.checked ? "Mark undone" : "Mark done"}
         </button>
-        <button className="flex-1 cursor-pointer rounded-sm bg-red-700 p-2 text-sm font-medium hover:bg-red-600 active:bg-red-800">
+        <button
+          onClick={() => {
+            if (todo) {
+              deleteTodoMutation.mutate(todo?.id);
+            }
+          }}
+          className="flex-1 cursor-pointer rounded-sm bg-red-700 p-2 text-sm font-medium hover:bg-red-600 active:bg-red-800"
+        >
           Delete
         </button>
       </div>
